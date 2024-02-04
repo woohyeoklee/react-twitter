@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { BsFillHouseFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut, IoIosLogIn } from "react-icons/io";
+import { useContext } from "react";
+import AuthContext from "context/AuthContext";
 
 
 
 
 export default function MenuList() {
+  const {user} = useContext(AuthContext);
+
   const navigate = useNavigate();
   return (
     <div className="footer">
@@ -23,12 +27,21 @@ export default function MenuList() {
           <FaUserCircle />
           Profile
         </button>
-        <button 
-          type="button"
-          onClick={() => navigate("/")}>
-          <IoIosLogOut />
-          Logout
-        </button>
+        {user === null ? (
+          <button 
+            type="button"
+            onClick={() => navigate("/users/login")}>
+            <IoIosLogIn />
+            Login
+          </button>  
+        ) : (
+          <button 
+            type="button"
+            onClick={() => navigate("/")}>
+            <IoIosLogOut />
+            Logout
+          </button>  
+        )}
       </div>
     </div>
   )
