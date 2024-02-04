@@ -3,7 +3,10 @@ import { BsFillHouseFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import { IoIosLogOut, IoIosLogIn } from "react-icons/io";
 import { useContext } from "react";
+import {getAuth, signOut} from "firebase/auth";
+import {toast} from "react-toastify";
 import AuthContext from "context/AuthContext";
+import { app } from "firebaseApp";
 
 
 
@@ -37,7 +40,12 @@ export default function MenuList() {
         ) : (
           <button 
             type="button"
-            onClick={() => navigate("/")}>
+            onClick={ async () => {
+              const auth = getAuth(app);
+              signOut(auth);
+              toast.success("로그아웃 되었습니다.");
+              navigate("/users/login");
+            }}>
             <IoIosLogOut />
             Logout
           </button>  

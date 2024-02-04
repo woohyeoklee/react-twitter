@@ -1,6 +1,6 @@
 import { useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "firebaseApp";
 import { toast } from "react-toastify";
 
@@ -42,7 +42,7 @@ export default function SignupForm() {
       setPassword(value);
       if (value.length < 8) {
         setError("비밀번호는 8자 이상이어야 합니다.");
-      }else if (password !== value) {
+      }else if (value !== passwordConfirmation) {
         setError("비밀번호가 일치하지 않습니다.");
       } else {
         setError("");
@@ -58,6 +58,20 @@ export default function SignupForm() {
         setError("");
       }
     }
+  }
+  const onClickSocilLogin = async (
+    e: any
+  ) => {
+    const {target: {name}} = e;
+
+    let provider;
+    const auth = getAuth(app);
+
+    if (name === "google") {
+      provider = new GoogleAuthProvider();
+    }
+
+    await signInWithPopup(auth, provider as GoogleAuthProvider);
   }
 
   return (
@@ -106,14 +120,23 @@ export default function SignupForm() {
 
         <div className="form__block">
           계정이 있으신가요?
-          <Link to="/login" className="form__link">
+          <Link to="/users/login" className="form__link">
             로그인하기
           </Link>
         </div>
 
         <div className="form__block">
-          <button type="submit" className="form__btn-submit" disabled={error?.length > 0} >
+          <button type="submit" className="form__btn--submit" disabled={error?.length > 0} >
             회원가입
+          </button>
+        </div>
+        <div className="form__block">
+          <button 
+            type="button" 
+            name="google" 
+            className="form__btn--google" 
+            onClick={onClickSocilLogin} >
+              Google로 회원가입
           </button>
         </div>
     </form>

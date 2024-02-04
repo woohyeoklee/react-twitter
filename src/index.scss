@@ -1,19 +1,19 @@
 $background: #1e293b;
 $activeBg: #3c495f5f;
-$white: #fff;
+$white: #ffffff;
 $border: #708090;
-$promarycolor: #60a5fa;
+$primaryColor: #60a5fa;
 $activeBorder: #3b82f6;
 $grayText: #9ca3af;
 $danger: #dc2626;
-$dangerhover: #dc262682;
+$dangerDark: #dc26268e;
 $gray: #6b7280;
-$grayhover: #6b728082;
-$font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-sans-serif;
+$grayDark: #4c515b;
 
- // 전체 레이아웃
+$font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+// 전체 레이아웃
 body {
   margin: 0;
   font-family: $font;
@@ -46,6 +46,20 @@ body {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
+.transparent {
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+}
+
+.sticky {
+  width: 100%;
+  position: sticky;
+  max-width: 600px;
+  margin: 0 auto;
+  top: 0;
+}
+
+// footer
 .footer {
   position: fixed;
   right: 0;
@@ -73,38 +87,42 @@ body {
       background-color: transparent;
       padding: 16px 0px;
       backdrop-filter: blur(10px);
-
     }
   }
-
 }
 
+// home 레이아웃
 .home {
+  &__top {
+    @extend .transparent;
+    @extend .sticky;
+  }
+
   &__title {
+    background-color: transparent;
+    width: 100%;
     padding: 16px;
     font-weight: 700;
     font-size: 20px;
   }
+
   &__tabs {
+    background-color: transparent;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   &__tab {
-    padding: 16px;
-    font-weight: 500;
+    background-color: transparent;
     text-align: center;
+    font-weight: 500;
+    padding: 16px;
     cursor: pointer;
+
     &--active {
       font-weight: 700;
-      text-align: center;
-      padding: 16px;
       border-bottom: 2px solid $activeBorder;
-      &:hover,
-      &:focus {
-      background-color: $activeBg;
-    }
     }
 
     &:hover,
@@ -147,7 +165,7 @@ body {
       justify-content: center;
       cursor: pointer;
     }
-    
+
     .hidden {
       display: none;
     }
@@ -156,12 +174,36 @@ body {
   &__submit-btn {
     @extend .button;
     padding: 0.5rem 1rem;
-    background-color: $promarycolor; 
+    background-color: $primaryColor;
   }
 }
 
-// 포스트 레이아웃
+// Post 레이아웃
 .post {
+  &__header {
+    button {
+      border: none;
+      padding: 16px;
+    }
+
+    &-btn {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+
+  &__no-posts {
+    padding: 16px;
+
+    .post__text {
+      font-size: 14px;
+      border: 1px solid $gray;
+      padding: 16px;
+      border-radius: 4px;
+    }
+  }
+
   padding-bottom: 40px;
 
   &__flex {
@@ -170,8 +212,8 @@ body {
     align-items: center;
   }
 
-  &__email, 
-  &__creadtedAt {
+  &__email,
+  &__createdAt {
     font-size: 12px;
     color: $grayText;
   }
@@ -179,26 +221,30 @@ body {
   &__box {
     padding: 10px 0px;
     border-bottom: 1px solid $border;
+
     a {
       text-decoration: none;
     }
+
     &-profile {
       text-decoration: none;
       padding: 0px 10px;
-  
-      &__img,
-      &__icon {
+
+      &-img,
+      &-icon {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         margin-right: 10px;
       }
     }
+
     &-content {
       display: block;
       font-weight: 500;
       padding: 16px 4px;
     }
+
     &-footer {
       padding: 0 16px;
       margin-top: 10px;
@@ -212,18 +258,23 @@ body {
 
         &.post__delete {
           background-color: $danger;
-          &:hover {
-            background-color: $dangerhover;
+
+          &:hover,
+          &:focus {
+            background-color: $dangerDark;
           }
         }
+
         &.post__edit {
           background-color: $gray;
 
           a {
             background-color: transparent;
           }
-          &:hover {
-            background-color: $grayhover;
+
+          &:hover,
+          &:focus {
+            background-color: $grayDark;
           }
         }
 
@@ -231,11 +282,109 @@ body {
         &.post__comments {
           @extend .post__flex;
 
-          &:hover {
+          &:hover,
+          &:focus {
             color: $gray;
           }
         }
-      } 
+      }
+    }
+  }
+}
+
+// form 레이아웃
+.form {
+  margin: 0 auto;
+  max-width: 680px;
+  padding: 20px;
+
+  input {
+    height: 20px;
+    padding: 10px;
+    border-radius: 0.3rem;
+    border: 1px solid lightgray;
+    width: 96%;
+    max-width: 680px;
+  }
+
+  &__block {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  &__block--lg {
+    margin-top: 28px;
+    width: 100%;
+  }
+
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  &__btn--submit {
+    @extend .button;
+    width: 100%;
+    height: 48px;
+    font-weight: 600;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 auto;
+    color: white;
+    background-color: $primaryColor;
+
+    &:hover,
+    &:focus {
+      background-color: $activeBorder;
+    }
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    padding-bottom: 20px;
+  }
+
+  &__link {
+    margin-left: 10px;
+    text-decoration: none;
+    color: $grayText;
+
+    &:hover,
+    &:focus {
+      color: $gray;
+    }
+  }
+
+  &__error {
+    color: red;
+  }
+
+  &__btn--google {
+    @extend .form__btn--submit;
+    background-color: $white;
+    color: $activeBorder;
+
+    &:hover,
+    &:focus {
+      background-color: $activeBorder;
+      color: $white;
+    }
+  }
+
+  &__btn--github {
+    @extend .form__btn--submit;
+    background-color: black;
+    color: white;
+
+    &:hover,
+    &:focus {
+      background-color: $activeBg;
+      color: $white;
     }
   }
 }
